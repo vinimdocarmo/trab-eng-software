@@ -1,0 +1,92 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Métricas</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./node_modules/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <img src="assets/img/icons8-combo-chart-40.png" alt="Metrics" height="20" width="20">
+            <strong style="margin-left: 10px">Métricas de Software</strong>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+      <section>
+        <div class="container">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Projetos</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Entidades</li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row">
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Descrição</th>
+                      <th scope="col">Tipo</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="entities">
+                  </tbody>
+                </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+    <script>
+      const entities = JSON.parse(localStorage.getItem("projects"))[0].entities;
+      const $entities = $("#entities");
+
+      for (let entity of entities) {
+        $entities.append(createEnityTemplate(entity));
+      }
+
+      $(".go-to-editar-entidade").on("click", function () { window.location = "/editar-entidade.html"; });
+
+      function createEnityTemplate(entity) {
+        return `
+          <tr>
+            <th>${entity.name}</th>
+            <td>${entity.description}</td>
+            <td>${entity.type === "internal" ? "Interna" : "Externa"}</td>
+            <td><button class="go-to-editar-entidade btn btn-warning btn-sm">Editar</button></td>
+          </tr>
+        `;
+      }
+    </script>
+  </body>
+</html>
